@@ -24,9 +24,6 @@ class TransactionListView(TemplateView):
                 "titles": titles,
                 "fields": fields,
                 "transactions_count": Transaction.objects.count(),
-                "due_count": self.get_total_due(),
-                "paid_count": self.get_total_paid(),
-                "canceled_count": self.get_total_canceled(),
             }
         )
         TemplateHelper.map_context(context)
@@ -39,6 +36,7 @@ class TransactionListView(TemplateView):
         )
         return Transaction.objects.all().order_by(first_field[0].name)
 
+    """
     def get_total_due(self):
         total_due_amount = Transaction.objects.filter(status="Due").aggregate(
             total_due=Sum("total")
@@ -69,3 +67,4 @@ class TransactionListView(TemplateView):
             if total_canceled_amount["total_canceled"] is not None
             else 0.0
         )
+    """

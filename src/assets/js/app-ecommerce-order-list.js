@@ -235,8 +235,8 @@ $(function () {
       language: {
         sLengthMenu: '_MENU_',
         search: '',
-        searchPlaceholder: 'Search Order',
-        info: 'Displaying _START_ to _END_ of _TOTAL_ entries',
+        searchPlaceholder: 'Ordem de pesquisa',
+        info: 'Exibindo _START_ to _END_ of _TOTAL_ entries',
         paginate: {
           next: '<i class="ri-arrow-right-s-line"></i>',
           previous: '<i class="ri-arrow-left-s-line"></i>'

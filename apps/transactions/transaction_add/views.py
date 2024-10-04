@@ -13,7 +13,14 @@ class TransactionAddView(PermissionRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+
+        """
+        for iCont in range(len(context)):
+            if context[iCont] is date:
+                context[iCont] =
         context["current_date"] = date.today().strftime("%Y-%m-%d")
+        """
+
         return context
 
     def post(self, request):
@@ -29,6 +36,8 @@ class TransactionAddView(PermissionRequiredMixin, TemplateView):
         return redirect(Transaction.tableName())
 
     def transaction_exists(self, cleaned_data):
+        return False
+        """
         return Transaction.objects.filter(
             customer__iexact=cleaned_data["customer"],
             transaction_date=cleaned_data["transaction_date"],
@@ -36,3 +45,4 @@ class TransactionAddView(PermissionRequiredMixin, TemplateView):
             total=cleaned_data["total"],
             status=cleaned_data["status"],
         ).exists()
+        """
