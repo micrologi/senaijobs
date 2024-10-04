@@ -1,0 +1,16 @@
+{
+  "menu": [
+    {
+      "name": "Mural de Oportunidades",
+      "icon": "menu-icon tf-icons ri-id-card-line",
+      "slug": "mural",
+      "url": "transactions"
+    },
+    {
+      "name": "Sobre o Mural",
+      "icon": "menu-icon tf-icons ri-layout-2-line",
+      "slug": "layouts",
+      "url": "layouts-without-menu"
+    }
+  ]
+}
