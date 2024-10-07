@@ -40,7 +40,7 @@
           event.stopPropagation();
         } else {
           // Submit your form
-          alert('Submitted!!!');
+          alert('Enviado!!!');
         }
 
         form.classList.add('was-validated');
@@ -69,85 +69,85 @@ document.addEventListener('DOMContentLoaded', function (e) {
         formValidationName: {
           validators: {
             notEmpty: {
-              message: 'Please enter your name'
+              message: 'Por favor, informe seu nome'
             },
             stringLength: {
               min: 6,
               max: 30,
-              message: 'The name must be more than 6 and less than 30 characters long'
+              message: 'O nome deve possuir entre 6 e 30 caracteres'
             },
             regexp: {
               regexp: /^[a-zA-Z0-9 ]+$/,
-              message: 'The name can only consist of alphabetical, number and space'
+              message: 'O nome deve conter apenas letras, números e espaços'
             }
           }
         },
         formValidationEmail: {
           validators: {
             notEmpty: {
-              message: 'Please enter your email'
+              message: 'Por favor, informe seu e-mail'
             },
             emailAddress: {
-              message: 'The value is not a valid email address'
+              message: 'O e-mail informado é inválido'
             }
           }
         },
         formValidationPass: {
           validators: {
             notEmpty: {
-              message: 'Please enter your password'
+              message: 'Por favor, informe sua senha'
             }
           }
         },
         formValidationConfirmPass: {
           validators: {
             notEmpty: {
-              message: 'Please confirm new password'
+              message: 'Por favor, confirme sua senha'
             },
             identical: {
               compare: function () {
                 return formValidationExamples.querySelector('[name="formValidationPass"]').value;
               },
-              message: 'The password and its confirm are not the same'
+              message: 'As senhas não coincidem'
             }
           }
         },
         formValidationFile: {
           validators: {
             notEmpty: {
-              message: 'Please select the file'
+              message: 'Por favor, selecione um arquivo'
             }
           }
         },
         formValidationDob: {
           validators: {
             notEmpty: {
-              message: 'Please select your DOB'
+              message: 'Por favor, selecione seu DOB'
             },
             date: {
               format: 'YYYY/MM/DD',
-              message: 'The value is not a valid date'
+              message: 'A data é inválida'
             }
           }
         },
         formValidationSelect2: {
           validators: {
             notEmpty: {
-              message: 'Please select your country'
+              message: 'Por favor, informe seu país'
             }
           }
         },
         formValidationLang: {
           validators: {
             notEmpty: {
-              message: 'Please add your language'
+              message: 'Por favor, informe seu idioma'
             }
           }
         },
         formValidationTech: {
           validators: {
             notEmpty: {
-              message: 'Please select technology'
+              message: 'Por favor, selecione a tecnologia'
             }
           }
         },
