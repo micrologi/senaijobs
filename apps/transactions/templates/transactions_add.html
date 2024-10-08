@@ -38,19 +38,17 @@
         {% if field.name == "id" %}
           <input type="hidden" name="id" id="user_id">
         {% else %}
-            {% if field.get_internal_type == 'CharField' %}
-              {% if field.choices %}
-                <select id="{{field.attname}}" class="select2 form-select" name="{{field.name}}">
-                  <option value="" disabled selected class="d-none"></option>
-                  {% for choice in field.choices %}
-                    <option value="choice.0">{{choice.1}}</option>
-                  {% endfor %}
-                </select>
-                <label for="{{field.name}}">{{field.verbose_name}}</label>
-              {% else %}
+            {% if field.choices %}
+              <select id="{{field.attname}}" class="select2 form-select" name="{{field.name}}">
+                <option value="" disabled selected class="d-none"></option>
+                {% for choice in field.choices %}
+                  <option value="choice.0">{{choice.1}}</option>
+                {% endfor %}
+              </select>
+              <label for="{{field.name}}">{{field.verbose_name}}</label>
+            {% elif field.get_internal_type == 'CharField' %}
                 <input type="text" class="form-control" id="{{field.attname}}" name="{{field.name}}" placeholder="{{field.verbose_name}}" maxlength="{{field.max_length|default:''}}"/>
                 <label for="{{field.name}}">{{field.verbose_name}}</label>
-              {% endif %}
             {% elif field.get_internal_type == 'DateField' %}
                 <input type="date" class="form-control" id="{{field.attname}}" name="{{field.name}}" placeholder="{{field.verbose_name}}" value="{{field.default}}" />
                 <label for="{{field.name}}">{{field.verbose_name}}</label>

@@ -2,22 +2,44 @@ from django.db import models
 from datetime import date
 
 class Transaction(models.Model):
-    customer = models.CharField(max_length=50, verbose_name="Cliente",db_index=True)
-    address = models.CharField(max_length=50, verbose_name="Endereço",db_index=False,default="")
-    bairro = models.CharField(max_length=50, verbose_name="Bairro",db_index=False,default="")
-    transaction_date = models.DateField(verbose_name="Data transação",db_index=True,default=date.today().strftime('%Y-%m-%d'))
+    empresa = models.CharField(verbose_name="Empresa", max_length=50, db_index=True,default="")
+    atividades = models.CharField(verbose_name="Atividades", max_length=100, db_index=False,default="")
+    requisitos = models.CharField(verbose_name="Requisitos", max_length=100, db_index=False,default="")
+    contato = models.CharField(verbose_name="Contato", max_length=50, db_index=False,default="")
+    area = models.IntegerField(verbose_name="Área",
+        choices=[
+                    (1, "Administração e gestão"),
+                    (2, "Alimentos e bebidas"),
+                    (3, "Construção civil e design"),
+                    (4, "Moda Têxtil, calçados e joalheria"),
+                    (5, "Papel, celulose, gráfica, editorial"),
+                    (6, "Mecânica industrial"),
+                    (7, "Logistica e transporte"),
+                    (8, "Automotiva"),
+                    (9, "Mecâtronica, automação e energia"),
+                    (10, "Meio ambiente, saúde e segurança do trabalho"),
+                    (11, "Metalurgia e soldagem"),
+                    (12, "Química cerâmica e plásticos"),
+                    (13, "Refrigeração e climatização"),
+                    (14, "Tecnologia da informação"),
+                    (15, "Outras")
+                ],default=15
+    )
+    aprovada = models.BooleanField(verbose_name="Aprovada",default=False)
+
+    '''
+    data_transacao = models.DateField(verbose_name="Data transação",db_index=True,default=date.today().strftime('%Y-%m-%d'))
     due_date = models.DateField(verbose_name="Data conta",default=date.today().strftime('%Y-%m-%d'))
-    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Total")
-    ativo = models.BooleanField(verbose_name="Ativo",default=True)
-    status = models.CharField(
+    total = models.DecimalField(verbose_name="Total",max_digits=10, decimal_places=2)
+    status = models.CharField(verbose_name="Situação",
         max_length=20,
         choices=[
                     ("Paid", "Paid"),
                     ("Due", "Due"),
                     ("Canceled", "Canceled")
-                ],
-        verbose_name="Situação",
+                ]
     )
+    '''
 
     def tableName():
         return "transactions"

@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
         e.preventDefault();
         const userName = this.getAttribute('data-transaction-username');
         Swal.fire({
-          title: 'Delete Transaction?',
-          html: `<p class="text-danger">Are you sure you want to delete transaction of ?<br> <span class="fw-medium text-body">${userName}</span></p>`,
+          title: 'Deletar Registro?',
+          html: `<p class="text-danger">Confirma a deleção deste registro?<br> <span class="fw-medium text-body">${userName}</span></p>`,
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonText: 'Delete',
-          cancelButtonText: 'Cancel',
+          confirmButtonText: 'Sim, deletar!',
+          cancelButtonText: 'Não, cancelar.',
           customClass: {
             confirmButton: 'btn btn-primary waves-effect waves-light',
             cancelButton: 'btn btn-outline-secondary  waves-effect waves-light'
@@ -21,16 +21,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
         }).then(result => {
           if (result.isConfirmed) {
             window.location.href = this.getAttribute('href'); //redirect to herf
-          } else {
-            Swal.fire({
-              title: 'Cancelled',
-              html: `<p>Did not delete <span class="fw-medium text-primary">${userName}</span> Transaction!</p>`,
-              icon: 'error',
-              confirmButtonText: 'Ok',
-              customClass: {
-                confirmButton: 'btn btn-success  waves-effect waves-light'
-              }
-            });
           }
         });
       });

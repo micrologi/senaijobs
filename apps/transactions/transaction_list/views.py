@@ -23,6 +23,12 @@ class TransactionListView(TemplateView):
                 records[iCont][1][1].append(field.get_internal_type())
             iCont+=1
 
+        #Zipa as 2 listas para poder manipular no template
+        for iCont in range(len(records)):
+            records[iCont][0] = records[iCont][1][0][0]
+            records[iCont][1] = zip(records[iCont][1][0],records[iCont][1][1])
+
+
         # Update the context
         context.update(
             {

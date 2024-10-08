@@ -157,7 +157,7 @@ $(function () {
         $(this).slideDown();
       },
       hide: function (e) {
-        confirm('Are you sure you want to delete this element?') && $(this).slideUp(e);
+        confirm('Confirma deleção deste elemento?') && $(this).slideUp(e);
       }
     });
   }

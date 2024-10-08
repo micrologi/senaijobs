@@ -33,8 +33,8 @@ TEMPLATE_CONFIG = {
 # Theme Variables
 # ? Personalize template by changing theme variables (For ex: Name, URL Version etc...)
 THEME_VARIABLES = {
-    "creator_name": "ThemeSelection",
-    "creator_url": "https://webagencia.com.br/",
+    "creator_name": "Marlon Andrei de Carvalho",
+    "creator_url": "https://www.linkedin.com/in/marlon-andrei-c-a925a7182",
     "template_name": "Jobs",
     "template_suffix": "",
     "template_version": "2.0.0",
@@ -48,10 +48,10 @@ THEME_VARIABLES = {
     "instagram_url": "",
     "license_url": "",
     "live_preview": "",
-    "product_page": "https://themeselection.com/item/materio-bootstrap-django-admin-template/",
-    "support": "https://themeselection.com/support/",
-    "more_themes": "https://themeselection.com/",
-    "documentation": "https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation",
+    "product_page": "",
+    "support": "",
+    "more_themes": "",
+    "documentation": "",
     "changelog": "",
     "git_repository": "https://github.com/themeselection/materio-bootstrap-html-django-admin-template",
     "git_repo_access": "https://tools.themeselection.com/github/github-access",

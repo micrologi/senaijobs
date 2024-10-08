@@ -62,24 +62,41 @@
       </thead>
       <tbody>
 
-        {{records}}
         {% for record in records %}
         <tr>
           <td></td>
-          {% for field_cell,field_type in zip(record.1.0,record.1.1) %}
-            <td class="text-nowrap text-center">
-              {{ field_cell }}
+          {% for field_value,field_atrib in record.1 %}
+            {% if field_atrib == 'BooleanField' %}
+              <td class="text-nowrap text-center">
+            {% elif field_atrib == 'DateField' %}
+              <td class="text-nowrap text-center">
+            {% elif field_atrib == 'TimeField' %}
+              <td class="text-nowrap text-center">
+            {% elif field_atrib == 'DateTimeField' %}
+              <td class="text-nowrap text-center">
+            {% elif field_atrib == 'IntegerField' %}
+              <td class="text-nowrap text-center">
+            {% elif field_atrib == 'BigIntegerField' %}
+              <td class="text-nowrap text-center">
+            {% elif field_atrib == 'AutoField' %}
+              <td class="text-nowrap text-center">
+            {% elif field_atrib == 'DecimalField' %}
+              <td class="text-nowrap text-end">
+            {% else %}
+              <td class="text-nowrap text-start">
+            {% endif %}
+              {{ field_value }}
             </td>
           {% endfor %}
           <td>
             <div class="d-inline-block text-nowrap">
               <!-- permission required: edit_transaction -->
               {% if perms.transactions.edit_transaction %}
-              <a href="{% url 'transactions-update' record.1.0.0 %}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect"><i class='ri-edit-box-line ri-22px'></i></a>
+              <a href="{% url 'transactions-update' record.0 %}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" title="Editar"><i class='ri-edit-box-line ri-22px'></i></a>
               {% endif %}
               <!-- permission required: delete_transaction -->
               {% if perms.transactions.delete_transaction %}
-              <a href="{% url 'transactions-delete' record.1.0.0 %}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect delete-transaction" data-transaction-username="{{ transaction.customer|capfirst }}"><i class="ri-delete-bin-7-line ri-22px"></i></a>
+              <a href="{% url 'transactions-delete' record.0 %}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect delete-transaction" data-transaction-username="{{ transaction.customer|capfirst }}" title="Deletar"><i class="ri-delete-bin-7-line ri-22px"></i></a>
               {% endif %}
             </div>
           </td>
