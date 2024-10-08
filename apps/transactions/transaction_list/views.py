@@ -25,9 +25,8 @@ class TransactionListView(TemplateView):
 
         #Zipa as 2 listas para poder manipular no template
         for iCont in range(len(records)):
-            records[iCont][0] = records[iCont][1][0][0]
+            records[iCont][0] = records[iCont][1][0][0]  #Capturo o ID para acessar facilmente no template
             records[iCont][1] = zip(records[iCont][1][0],records[iCont][1][1])
-
 
         # Update the context
         context.update(

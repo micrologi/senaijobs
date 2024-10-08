@@ -40,9 +40,8 @@
         {% else %}
             {% if field.choices %}
               <select id="{{field.attname}}" class="select2 form-select" name="{{field.name}}">
-                <option value="" disabled selected class="d-none"></option>
                 {% for choice in field.choices %}
-                  <option value="choice.0">{{choice.1}}</option>
+                  <option value="{{choice.0}}">{{choice.1}}</option>
                 {% endfor %}
               </select>
               <label for="{{field.name}}">{{field.verbose_name}}</label>
@@ -60,9 +59,8 @@
                 <label for="{{field.name}}">{{field.verbose_name}}</label>
             {% elif field.get_internal_type == 'BooleanField' %}
                 <select id="{{field.attname}}" class="select2 form-select" name="{{field.name}}">
-                  <option value="" selected class="d-none"></option>
-                    <option value="1">Verdadeiro</option>
-                    <option value="0">Falso</option>
+                    <option value="True" selected>Verdadeiro</option>
+                    <option value="False">Falso</option>
                 </select>
                 <label for="{{field.name}}">{{field.verbose_name}}</label>
             {% else %}

@@ -29,18 +29,24 @@ class TransactionAddView(PermissionRequiredMixin, TemplateView):
 
         return context
 
+    # Post - Adiciona os dados
     def post(self, request):
-        form = TransactionForm(request.POST)
+        try:
+            form = TransactionForm(request.POST)
 
-        if form.is_valid():
-            if not self.transaction_exists(form.cleaned_data):
-                form.save()
-                messages.success(request, "Registro adicionado")
+            if form.is_valid():
+                if not self.transaction_exists(form.cleaned_data):
+                    form.save()
+                    messages.success(request, "Registro adicionado")
+                else:
+                    messages.error(request, "Um registro semelhante já existe")
             else:
-                messages.error(request, "Um registro semelhante já existe")
-        else:
-            messages.error(request, "Adição falhou")
+                messages.error(request, "Adição falhou")
+        except BaseException as e:
+            print(str(e))
+
         return redirect(Transaction.tableName())
+
 
     def transaction_exists(self, cleaned_data):
         return False
