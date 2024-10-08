@@ -1,30 +1,37 @@
-from datetime import date
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.views.generic import TemplateView
+from web_project.template_helpers.theme import TemplateHelper
 from web_project import TemplateLayout
 from apps.transactions.models import Transaction
 from apps.transactions.forms import TransactionForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
-
 
 class TransactionAddView(PermissionRequiredMixin, TemplateView):
     permission_required = Transaction.tableName() + ".add_transaction"
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+        fields = Transaction._meta.get_fields()
 
-        """
-        for iCont in range(len(context)):
-            if context[iCont] is date:
-                context[iCont] =
-        context["current_date"] = date.today().strftime("%Y-%m-%d")
-        """
+        #Workaround pois preciso do nome com hifén no template
+        for field in fields:
+            field.attname = field.attname.replace('_','-')
+
+        # Update the context
+        context.update(
+            {
+                "fields": fields,
+                "transactions_count": Transaction.objects.count(),
+            }
+        )
+        TemplateHelper.map_context(context)
 
         return context
 
     def post(self, request):
         form = TransactionForm(request.POST)
+
         if form.is_valid():
             if not self.transaction_exists(form.cleaned_data):
                 form.save()

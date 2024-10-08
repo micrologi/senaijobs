@@ -3,7 +3,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Transactions{% endblock title %}
+{% block title %}Adição de Registro{% endblock title %}
 
 {% block vendor_css %}
 {{ block.super }}
@@ -23,41 +23,59 @@
 
 {% block page_js %}
 {{ block.super }}
-<script src="{% static 'js/transactions-add-update.js' %}"></script>
 {% endblock page_js %}
 
 {% block content %}
 <!-- Add Transactions Form -->
 <div class="card">
   <div class="card-body">
-    <form class="add-transactions pt-0" id="addTransactionForm" action="{% url 'transactions-add' %}" method="post">
+    <form class="add-transactions pt-0" id="TransactionForm" action="{% url 'transactions-add' %}" method="post">
       {% csrf_token %}
-      <div class="form-floating form-floating-outline mb-6">
-        <input type="text" class="form-control" id="customer-name" name="customer" placeholder="Full Name" />
-        <label for="customer-name">Customer</label>
-      </div>
-      <div class="form-floating form-floating-outline mb-6">
-        <input type="text" id="transaction-date" class="form-control" name="transaction_date" value="{{ current_date }}" placeholder="Transaction Date" />
-        <label for="transaction-date">Transaction date</label>
-      </div>
-      <div class="form-floating form-floating-outline mb-6">
-        <input type="text" id="due-date" class="form-control" name="due_date" placeholder="Due Date" />
-        <label for="due-date">Due date</label>
-      </div>
-      <div class="form-floating form-floating-outline mb-6">
-        <input type="number" id="total-amount" name="total" class="form-control" placeholder="Total Amount" />
-        <label for="total-amount">Total Amount</label>
-      </div>
-      <div class="form-floating form-floating-outline mb-6">
-        <select id="customer-status" class="select2 form-select" name="status">
-          <option value="" disabled selected class="d-none"></option>
-          <option value="Paid">Paid</option>
-          <option value="Due">Due</option>
-          <option value="Canceled">Canceled</option>
-        </select>
-        <label for="customer-status">Status</label>
-      </div>
-      <button type="submit" class="btn btn-primary me-sm-3 me-1" name="submitButton">Salva</button>
+
+
+      {% for field in fields %}
+        <div class="form-floating form-floating-outline mb-6">
+        {% if field.name == "id" %}
+          <input type="hidden" name="id" id="user_id">
+        {% else %}
+            {% if field.get_internal_type == 'CharField' %}
+              {% if field.choices %}
+                <select id="{{field.attname}}" class="select2 form-select" name="{{field.name}}">
+                  <option value="" disabled selected class="d-none"></option>
+                  {% for choice in field.choices %}
+                    <option value="choice.0">{{choice.1}}</option>
+                  {% endfor %}
+                </select>
+                <label for="{{field.name}}">{{field.verbose_name}}</label>
+              {% else %}
+                <input type="text" class="form-control" id="{{field.attname}}" name="{{field.name}}" placeholder="{{field.verbose_name}}" maxlength="{{field.max_length|default:''}}"/>
+                <label for="{{field.name}}">{{field.verbose_name}}</label>
+              {% endif %}
+            {% elif field.get_internal_type == 'DateField' %}
+                <input type="date" class="form-control" id="{{field.attname}}" name="{{field.name}}" placeholder="{{field.verbose_name}}" value="{{field.default}}" />
+                <label for="{{field.name}}">{{field.verbose_name}}</label>
+            {% elif field.get_internal_type == 'DateTimeField' %}
+                <input type="datetime-local" class="form-control" id="{{field.attname}}" name="{{field.name}}" placeholder="{{field.verbose_name}}"/>
+                <label for="{{field.name}}">{{field.verbose_name}}</label>
+            {% elif field.get_internal_type == 'DecimalField' %}
+                <input type="number" class="form-control" id="{{field.attname}}" name="{{field.name}}" placeholder="{{field.verbose_name}}" pattern="^\d*(\.\d{0,2})?$" />
+                <label for="{{field.name}}">{{field.verbose_name}}</label>
+            {% elif field.get_internal_type == 'BooleanField' %}
+                <select id="{{field.attname}}" class="select2 form-select" name="{{field.name}}">
+                  <option value="" selected class="d-none"></option>
+                    <option value="1">Verdadeiro</option>
+                    <option value="0">Falso</option>
+                </select>
+                <label for="{{field.name}}">{{field.verbose_name}}</label>
+            {% else %}
+              <input type="text" class="form-control" id="{{field.attname}}" name="{{field.name}}" placeholder="{{field.verbose_name}}" maxlength="{{field.max_length|default:''}}"/>
+              <label for="{{field.name}}">{{field.verbose_name}}</label>
+            {% endif %}
+        {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary me-sm-3 me-1" name="submitButton">Salvar</button>
       <a href="{% url 'transactions' %}" class="btn btn-outline-secondary">Cancelar</a>
     </form>
   </div>

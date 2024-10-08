@@ -54,28 +54,32 @@
       <thead class="table-light">
         <tr class="text-nowrap">
           <th></th>
-          {% for title in titles %}
-            <th>{{ title }}</th>
+          {% for field in fields %}
+            <th>{{ field.verbose_name }}</th>
           {% endfor %}
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
-        {% for transaction in transactions %}
+
+        {{records}}
+        {% for record in records %}
         <tr>
           <td></td>
-          {% for field in fields %}
-            <td class="text-nowrap">{{ transaction.customer }}</td>
+          {% for field_cell,field_type in zip(record.1.0,record.1.1) %}
+            <td class="text-nowrap text-center">
+              {{ field_cell }}
+            </td>
           {% endfor %}
           <td>
             <div class="d-inline-block text-nowrap">
               <!-- permission required: edit_transaction -->
               {% if perms.transactions.edit_transaction %}
-              <a href="{% url 'transactions-update' transaction.id %}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect"><i class='ri-edit-box-line ri-22px'></i></a>
+              <a href="{% url 'transactions-update' record.1.0.0 %}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect"><i class='ri-edit-box-line ri-22px'></i></a>
               {% endif %}
               <!-- permission required: delete_transaction -->
               {% if perms.transactions.delete_transaction %}
-              <a href="{% url 'transactions-delete' transaction.id %}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect delete-transaction" data-transaction-username="{{ transaction.customer|capfirst }}"><i class="ri-delete-bin-7-line ri-22px"></i></a>
+              <a href="{% url 'transactions-delete' record.1.0.0 %}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect delete-transaction" data-transaction-username="{{ transaction.customer|capfirst }}"><i class="ri-delete-bin-7-line ri-22px"></i></a>
               {% endif %}
             </div>
           </td>
@@ -89,8 +93,6 @@
 <!--/ Transactions Table -->
 <script>
 var addTransactionBtn = '{% if perms.transactions.add_transaction %}' + true + '{% endif %}';
-
 </script>
-
 
 {% endblock %}

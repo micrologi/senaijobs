@@ -38,6 +38,7 @@
     <form class="update-transaction pt-0" id="UpdateTransactionForm" action="{% url 'transactions-update' transaction_id.id %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="id" id="user_id">
+
       <div class="form-floating form-floating-outline mb-6">
         <input type="text" class="form-control" id="customer-name" name="customer" value="{{ transaction_id.customer }}" placeholder="Full Name" />
         <label for="customer-name">Customer</label>
@@ -62,9 +63,11 @@
         </select>
         <label for="customer-status">Status</label>
       </div>
-      <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Save</button>
-      <a href="{% url 'transactions-delete' transaction_id.id %}" class="btn btn-danger me-sm-3 me-1 delete-transaction" data-transaction-username="{{ transaction_id.customer }}">Delete</a>
-      <a href="{% url 'transactions' %}" class="btn btn-outline-secondary me-sm-3 me-1">Back</a>
+
+
+      <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Salvar</button>
+      <a href="{% url 'transactions-delete' transaction_id.id %}" class="btn btn-danger me-sm-3 me-1 delete-transaction" data-transaction-username="{{ transaction_id.customer }}">Deletar</a>
+      <a href="{% url 'transactions' %}" class="btn btn-outline-secondary me-sm-3 me-1">Cancelar</a>
     </form>
   </div>
 </div>

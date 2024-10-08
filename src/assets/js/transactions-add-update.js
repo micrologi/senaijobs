@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     // Variables for DataTable
     var TransactionDate = $('#transaction-date');
     var DueDate = $('#due-date');
+
     var select2 = $('.select2');
 
     if (select2.length) {
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         var $this = $(this);
         select2Focus($this);
         $this.wrap('<div class="position-relative"></div>').select2({
-          placeholder: 'Select Status',
+          placeholder: 'Selecione uma opção na lista',
           dropdownParent: $this.parent()
         });
 

@@ -4,24 +4,29 @@ from web_project.template_helpers.theme import TemplateHelper
 from web_project import TemplateLayout
 from apps.transactions.models import Transaction
 
-
 class TransactionListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
         transactions = self.get_annotated_transactions()
+        fields = Transaction._meta.get_fields()
 
-        titles = []
-        fields = []
-        for field in Transaction._meta.get_fields():
-            titles.append(field.verbose_name)
-            fields.append(field.name)
+        #Monta a lista de informações dinamicamente
+        records = []
+        iCont = 0
+        for transaction in transactions:
+            dict = transaction.__dict__
+            records.append([iCont,[[],[]]])
+            for field in fields:
+                attname = field.attname
+                records[iCont][1][0].append(transaction.__dict__[attname])
+                records[iCont][1][1].append(field.get_internal_type())
+            iCont+=1
 
         # Update the context
         context.update(
             {
-                "transactions": transactions,
-                "titles": titles,
+                "records": records,
                 "fields": fields,
                 "transactions_count": Transaction.objects.count(),
             }
