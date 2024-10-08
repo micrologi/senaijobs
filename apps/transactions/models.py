@@ -25,6 +25,7 @@ class Transaction(models.Model):
                     (15, "Outras")
                 ],default=15
     )
+    salario = models.DecimalField(verbose_name="Salário", max_digits=10, decimal_places=2, default=0)
     aprovada = models.BooleanField(verbose_name="Aprovada",default=False)
 
     '''

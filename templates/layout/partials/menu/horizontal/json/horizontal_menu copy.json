@@ -2,7 +2,7 @@
   "menu": [
     {
       "name": "Mural de Oportunidades",
-      "icon": "menu-icon tf-icons ri-id-card-line",
+      "icon": "menu-icon tf-icons ",
       "slug": "mural",
       "url": "transactions"
     },
