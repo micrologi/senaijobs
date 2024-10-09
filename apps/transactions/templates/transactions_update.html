@@ -3,7 +3,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Transactions{% endblock title %}
+{% block title %}Atualizar{% endblock title %}
 
 {% block vendor_css %}
 {{ block.super }}
@@ -28,46 +28,67 @@
 <script src="{% static 'js/transactions-add-update.js' %}"></script>
 <script src="{% static 'js/transactions-delete.js' %}"></script>
 {% endblock page_js %}
-
 {% block content %}
-
 
 <!-- Update Transactions Form -->
 <div class="card">
   <div class="card-body">
-    <form class="update-transaction pt-0" id="UpdateTransactionForm" action="{% url 'transactions-update' transaction_id.id %}" method="post">
+    <form class="update-transaction pt-0" id="UpdateTransactionForm" action="{% url 'transactions-update' transaction.id %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="id" id="user_id">
+      {% for value in values %}
+        <div class="form-floating form-floating-outline mb-6">
+        {% if value.0 == "id" %}
+          <input type="hidden" name="id" id="user_id" value="value.6">
+        {% else %}
 
-      <div class="form-floating form-floating-outline mb-6">
-        <input type="text" class="form-control" id="customer-name" name="customer" value="{{ transaction_id.customer }}" placeholder="Full Name" />
-        <label for="customer-name">Customer</label>
-      </div>
-      <div class="form-floating form-floating-outline mb-6">
-        <input type="text" id="transaction-date" class="form-control" name="transaction_date" value="{{ transaction_id.transaction_date|date:'c' }}" placeholder="Transaction Date" />
-        <label for="transaction-date">Transaction date</label>
-      </div>
-      <div class="form-floating form-floating-outline mb-6">
-        <input type="text" id="due-date" class="form-control" name="due_date" value="{{ transaction_id.due_date|date:'c' }}" placeholder="Due Date" />
-        <label for="current_date">Due date</label>
-      </div>
-      <div class="form-floating form-floating-outline mb-6">
-        <input type="number" id="total-amount" name="total" class="form-control" value="{{ transaction_id.total }}" placeholder="Total Amount" />
-        <label for="total-amount">Total Amount</label>
-      </div>
-      <div class="form-floating form-floating-outline mb-6">
-        <select id="customer-status" class="select2 form-select" name="status">
-          <option value="Paid" {% if transaction_id.status == 'Paid' %} selected {% endif %}>Paid</option>
-          <option value="Due" {% if transaction_id.status == 'Due' %} selected {% endif %}>Due</option>
-          <option value="Canceled" {% if transaction_id.status == 'Canceled' %} selected {% endif %}>Canceled</option>
-        </select>
-        <label for="customer-status">Status</label>
-      </div>
+          {% if value.4 %}
 
+            <select id="{{value.1}}" class="select2 form-select" name="{{value.0}}">
+              {% for choice in value.4 %}
+                {% if choice.0 == value.6 %}
+                  <option value="{{choice.0}}" selected>{{choice.1}}</option>
+                {% else %}
+                  <option value="{{choice.0}}">{{choice.1}}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            <label for="{{value.0}}">{{value.2}}</label>
 
-      <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Salvar</button>
-      <a href="{% url 'transactions-delete' transaction_id.id %}" class="btn btn-danger me-sm-3 me-1 delete-transaction" data-transaction-username="{{ transaction_id.customer }}">Deletar</a>
-      <a href="{% url 'transactions' %}" class="btn btn-outline-secondary me-sm-3 me-1">Cancelar</a>
+          {% elif value.3 == 'CharField' %}
+              <input type="text" value="{{value.6}}" class="form-control" id="{{value.1}}" name="{{value.0}}" placeholder="{{value.2}}" maxlength="{{value.5|default:''}}" />
+              <label for="{{value.0}}">{{value.2}}</label>
+          {% elif value.3 == 'DateField' %}
+              <input type="date" class="form-control" id="{{value.1}}" name="{{value.0}}" placeholder="{{value.2}}" value="{{value.6}}" />
+              <label for="{{value.0}}">{{value.2}}</label>
+          {% elif value.3 == 'DateTimeField' %}
+              <input type="datetime-local" class="form-control" id="{{value.1}}" name="{{value.0}}" placeholder="{{value.2}}" value="{{value.6}}"/>
+              <label for="{{value.0}}">{{value.2}}</label>
+          {% elif value.3 == 'DecimalField' %}
+              <input type="number" class="form-control" id="{{value.1}}" name="{{value.0}}" placeholder="{{value.2}}" pattern="^\d*(\.\d{0,2})?$" value="{{value.6}}"/>
+              <label for="{{value.0}}">{{value.2}}</label>
+          {% elif value.3 == 'BooleanField' %}
+              <select id="{{value.1}}" class="select2 form-select" name="{{value.0}}">
+                  {% if value.6 == True %}
+                    <option value="True" selected>Verdadeiro</option>
+                    <option value="False">Falso</option>
+                  {% else %}
+                    <option value="True">Verdadeiro</option>
+                    <option value="False" selected>Falso</option>
+                  {% endif %}
+              </select>
+              <label for="{{value.0}}">{{value.2}}</label>
+          {% else %}
+            <input type="text" class="form-control" id="{{value.1}}" name="{{value.0}}" placeholder="{{value.2}}" maxlength="{{value.5|default:''}}" value="{{value.6}}"/>
+            <label for="{{value.0}}">{{value.2}}</label>
+          {% endif %}
+
+        {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary me-sm-3 me-1" name="submitButton">Salvar</button>
+      <a href="{% url 'transactions' %}" class="btn btn-outline-secondary">Cancelar</a>
+
     </form>
   </div>
 </div>

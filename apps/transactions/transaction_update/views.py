@@ -13,11 +13,25 @@ class TransactionUpdateView(PermissionRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+        fields = Transaction._meta.get_fields()
+        transaction = self.get_transaction(self.kwargs["pk"])
 
-        # Sempre tem que existir uma coluna ID
-        context[Transaction.tableName() + "_id"] = self.get_transaction(
-            self.kwargs["pk"]
-        )
+        values = []
+
+        for field in fields:
+            values.append([
+                            field.name,
+                            field.attname,
+                            field.verbose_name,
+                            field.get_internal_type(),
+                            field.choices,
+                            field.max_length,
+                            transaction.__dict__[field.attname]
+                        ])
+
+        context['transaction'] = transaction
+        context['values'] = values
+
         return context
 
     def post(self, request, pk):

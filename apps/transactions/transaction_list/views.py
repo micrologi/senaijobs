@@ -15,7 +15,6 @@ class TransactionListView(TemplateView):
         records = []
         iCont = 0
         for transaction in transactions:
-            dict = transaction.__dict__
             records.append([iCont,[[],[]]])
             for field in fields:
                 attname = field.attname

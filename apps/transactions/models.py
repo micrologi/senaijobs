@@ -28,6 +28,7 @@ class Transaction(models.Model):
     salario = models.DecimalField(verbose_name="Salário", max_digits=10, decimal_places=2, default=0)
     aprovada = models.BooleanField(verbose_name="Aprovada",default=False)
 
+
     '''
     data_transacao = models.DateField(verbose_name="Data transação",db_index=True,default=date.today().strftime('%Y-%m-%d'))
     due_date = models.DateField(verbose_name="Data conta",default=date.today().strftime('%Y-%m-%d'))
@@ -46,4 +47,4 @@ class Transaction(models.Model):
         return "transactions"
 
     def __str__(self):
-        return self.customer
+        return self.id
