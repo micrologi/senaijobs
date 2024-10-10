@@ -17,6 +17,7 @@ class TransactionListView(TemplateView):
         for transaction in transactions:
             records.append([iCont,[[],[]]])
             for field in fields:
+
                 attname = field.attname
                 records[iCont][1][0].append(transaction.__dict__[attname])
                 records[iCont][1][1].append(field.get_internal_type())
